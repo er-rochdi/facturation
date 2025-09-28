@@ -17,5 +17,11 @@ class Client extends Model
         return $this->hasMany(Invoice::class);
     }
 
+    // total invoices amount
+    public function totalInvoicesAmount()
+    {
+        return $this->invoices()->sum('amount');
+    }
+
 
 }

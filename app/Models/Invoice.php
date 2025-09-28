@@ -16,11 +16,18 @@ class Invoice extends Model
         'due_date',
         'status',
         'notes',
-        'pdf_path'
+        'pdf_path',
+        'company_id'
+
     ];
 
     public function client()
     {
         return $this->belongsTo(Client::class);
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'company_id');
     }
 }

@@ -144,8 +144,6 @@ class InvoicesTable
                     DeleteBulkAction::make(),
                     ForceDeleteBulkAction::make(),
                     RestoreBulkAction::make(),
-
-                    // Action en lot pour générer les PDFs
                     \Filament\Actions\BulkAction::make('generatePdfs')
                         ->label('Générer PDFs')
                         ->icon('heroicon-o-document-duplicate')
