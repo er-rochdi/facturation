@@ -19,6 +19,10 @@ class InvoiceForm
                         Select::make('client_id')
                             ->relationship('client', 'name')
                             ->required(),
+                        Select::make('company_id')
+                            ->relationship('company', 'name')
+                            ->label('Entreprise')
+                            ->required(),
                         DatePicker::make('invoice_date')
                             ->required(),
                         TextInput::make('amount')

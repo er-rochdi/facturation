@@ -9,7 +9,7 @@
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 40px;
+            padding: 20px 40px;
             color: #000;
             font-size: 14px;
         }
@@ -20,7 +20,7 @@
         }
 
         .logo {
-            max-height: 100px;
+            max-height: 80px;
             margin-bottom: 10px;
         }
 
@@ -120,7 +120,7 @@
 <body>
     <div class="header">
         @if ($invoice->company && $invoice->company->logo)
-            <img src="{{ asset('storage/' . $invoice->company->logo) }}" alt="Logo" class="logo">
+            <img src="{{ storage_path('app/public/' . $invoice->company->logo) }}" alt="Logo" class="logo">
         @endif
         <div>
             @if ($invoice->company)
