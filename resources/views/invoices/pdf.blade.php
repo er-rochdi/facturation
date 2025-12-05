@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,174 +9,243 @@
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 20px;
-            color: #333;
+            padding: 40px;
+            color: #000;
+            font-size: 14px;
         }
+
         .header {
-            display: flex;
-            justify-content: space-between;
+            text-align: center;
             margin-bottom: 30px;
-            border-bottom: 2px solid #007bff;
-            padding-bottom: 20px;
         }
-        .company-info {
-            flex: 1;
+
+        .logo {
+            max-height: 100px;
+            margin-bottom: 10px;
         }
-        .invoice-info {
+
+        .date {
             text-align: right;
-            flex: 1;
+            margin-bottom: 30px;
         }
+
+        .invoice-title-wrapper {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .invoice-title {
+            display: inline-block;
+            border: 1px solid #000;
+            background-color: #e0e0e0;
+            padding: 5px 20px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
         .client-info {
-            margin: 30px 0;
-            padding: 20px;
-            background-color: #f8f9fa;
-            border-radius: 8px;
+            margin-bottom: 30px;
+            padding-left: 20px;
         }
-        .invoice-details {
+
+        .table {
             width: 100%;
             border-collapse: collapse;
-            margin: 30px 0;
+            margin-bottom: 20px;
         }
-        .invoice-details th,
-        .invoice-details td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
+
+        .table th,
+        .table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
         }
-        .invoice-details th {
-            background-color: #007bff;
+
+        .table th {
+            background-color: #999;
             color: white;
             font-weight: bold;
         }
-        .total-section {
-            margin-top: 30px;
-            text-align: right;
+
+        .table td.left {
+            text-align: left;
         }
-        .total-row {
-            margin: 10px 0;
-            font-size: 18px;
+
+        .totals-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 40px;
+            border: 1px solid #ccc;
         }
-        .total-amount {
-            font-size: 24px;
+
+        .totals-table td {
+            padding: 10px;
+            border: 1px solid #ccc;
             font-weight: bold;
-            color: #007bff;
-            border-top: 2px solid #007bff;
+        }
+
+        .amount-in-words {
+            margin-bottom: 50px;
+        }
+
+        .signature {
+            text-align: right;
+            margin-bottom: 70px;
+        }
+
+        .footer {
+            font-size: 11px;
+            border-top: 1px solid #000;
             padding-top: 10px;
         }
-        .notes {
-            margin-top: 40px;
-            padding: 20px;
-            background-color: #fff3cd;
-            border-left: 4px solid #ffc107;
+
+        .legal-note {
+            font-size: 10px;
+            margin-bottom: 20px;
         }
-        .footer {
-            margin-top: 50px;
-            text-align: center;
-            font-size: 12px;
-            color: #666;
-            border-top: 1px solid #ddd;
-            padding-top: 20px;
+
+        .company-details {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            line-height: 1.5;
         }
-        .status-badge {
-            display: inline-block;
-            padding: 5px 10px;
-            border-radius: 15px;
-            color: white;
-            font-size: 12px;
-            font-weight: bold;
+
+        .company-details span {
+            margin-right: 15px;
         }
-        .status-paid { background-color: #28a745; }
-        .status-sent { background-color: #ffc107; color: #000; }
-        .status-draft { background-color: #6c757d; }
-        .status-overdue { background-color: #dc3545; }
-        .status-partial { background-color: #17a2b8; }
-        .status-cancelled { background-color: #343a40; }
     </style>
 </head>
+
 <body>
     <div class="header">
-        <div class="company-info">
-            <h1>Votre Entreprise</h1>
-            <p>
-                123 Rue de l'Exemple<br>
-                75000 Paris, France<br>
-                Tél: +33 1 23 45 67 89<br>
-                Email: contact@entreprise.com
-            </p>
+        @if ($invoice->company && $invoice->company->logo)
+            <img src="{{ asset('storage/' . $invoice->company->logo) }}" alt="Logo" class="logo">
+        @endif
+        <div>
+            @if ($invoice->company)
+                <strong>{{ $invoice->company->name }}</strong><br>
+                Auto-entrepreneur
+            @endif
         </div>
-        <div class="invoice-info">
-            <h2>FACTURE #{{ $invoice->id }}</h2>
-            <p>
-                <strong>Date:</strong> {{ $invoice->invoice_date }}<br>
-                <strong>Échéance:</strong> {{ $invoice->due_date ? $invoice->due_date : 'N/A' }}<br>
-                <strong>Statut:</strong>
-                <span class="status-badge status-{{ $invoice->status }}">
-                    {{ ucfirst($invoice->status) }}
-                </span>
-            </p>
+    </div>
+
+    <div class="date">
+        Date :
+        {{ $invoice->invoice_date ? \Carbon\Carbon::parse($invoice->invoice_date)->format('d / m / Y') : date('d / m / Y') }}
+    </div>
+
+    <div class="invoice-title-wrapper">
+        <div class="invoice-title">
+            Facture numéro {{ str_pad($invoice->id, 6, '0', STR_PAD_LEFT) }}
         </div>
     </div>
 
     <div class="client-info">
-        <h3>Facturé à :</h3>
-        <p>
-            <strong>{{ $client->name }}</strong><br>
-            @if($client->address)
-                {{ $client->address }}<br>
-            @endif
-            @if($client->email)
-                Email: {{ $client->email }}<br>
-            @endif
-            @if($client->phone)
-                Tél: {{ $client->phone }}
-            @endif
-        </p>
+        <strong>Client :</strong> {{ $invoice->client->name }}<br>
+        <strong>ICE :</strong> {{ $invoice->client->ice ?? '' }}
     </div>
 
-    <table class="invoice-details">
+    <table class="table">
         <thead>
             <tr>
-                <th>Description</th>
-                <th>Quantité</th>
+                <th style="width: 40%;">Désignation</th>
+                <th>Nbr de jours</th>
                 <th>Prix unitaire</th>
                 <th>Total</th>
             </tr>
         </thead>
         <tbody>
-            {{-- Exemple de ligne de facture - à adapter selon votre modèle --}}
-            <tr>
-                <td>Service / Produit</td>
-                <td>1</td>
-                <td>{{ number_format($invoice->amount, 2, ',', ' ') }} €</td>
-                <td>{{ number_format($invoice->amount, 2, ',', ' ') }} €</td>
-            </tr>
+            @php
+                $calculatedTotal = 0;
+            @endphp
+            @if ($invoice->items->count() > 0)
+                @foreach ($invoice->items as $item)
+                    @php
+                        $lineTotal = $item->days * $item->unit_price;
+                        $calculatedTotal += $lineTotal;
+                    @endphp
+                    <tr>
+                        <td class="left">{{ $item->designation }}</td>
+                        <td>{{ $item->days }}</td>
+                        <td>{{ number_format($item->unit_price, 0, ',', ' ') }}</td>
+                        <td>{{ number_format($lineTotal, 0, ',', ' ') }}</td>
+                    </tr>
+                @endforeach
+                {{-- Add some empty rows to fill space --}}
+                @for ($i = 0; $i < 6 - $invoice->items->count(); $i++)
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                @endfor
+            @else
+                <!-- Fallback if no items input yet, use global amount -->
+                <tr>
+                    <td class="left">{{ $invoice->notes ?? 'Service' }}</td>
+                    <td>1</td>
+                    <td>{{ number_format($invoice->amount, 0, ',', ' ') }}</td>
+                    <td>{{ number_format($invoice->amount, 0, ',', ' ') }}</td>
+                </tr>
+                @php $calculatedTotal = $invoice->amount; @endphp
+                @for ($i = 0; $i < 6; $i++)
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                @endfor
+            @endif
         </tbody>
     </table>
 
-    <div class="total-section">
-        <div class="total-row">
-            <strong>Sous-total: {{ number_format($invoice->amount, 2, ',', ' ') }} €</strong>
-        </div>
-        <div class="total-row">
-            <strong>TVA (20%): {{ number_format($invoice->amount * 0.2, 2, ',', ' ') }} €</strong>
-        </div>
-        <div class="total-row total-amount">
-            <strong>TOTAL: {{ number_format($invoice->amount * 1.2, 2, ',', ' ') }} €</strong>
-        </div>
+    <table class="totals-table">
+        <tr>
+            <td style="width: 50%;">Montant en dirhams exonéré de la TVA¹</td>
+            <td style="width: 30%;">Total Net à payer</td>
+            <td style="text-align: right;">{{ number_format($calculatedTotal, 0, ',', ' ') }}</td>
+        </tr>
+    </table>
+
+    <div class="amount-in-words">
+        ARRETE LA PRESENTE FACTURE A LA SOMME DE :<br>
+        <strong>#{{ class_exists('NumberFormatter') ? new NumberFormatter('fr', NumberFormatter::SPELLOUT)->format($calculatedTotal) : $calculatedTotal }}
+            Dirhams#</strong>
     </div>
 
-    @if($invoice->notes)
-        <div class="notes">
-            <h4>Notes:</h4>
-            <p>{{ $invoice->notes }}</p>
-        </div>
-    @endif
+    <div class="signature">
+        Signature :<br>
+        @if ($invoice->company && $invoice->company->signature_path)
+            <!-- Assuming there's a signature in company provided fields or similar, otherwise blank -->
+            <!-- <img src="..." /> -->
+        @endif
+    </div>
 
     <div class="footer">
-        <p>
-            Merci pour votre confiance !<br>
-            Cette facture a été générée le {{ now()->format('d/m/Y à H:i') }}
-        </p>
+        <div class="legal-note">
+            ¹Art 91 – II – 1 du Code Général des Impôts.
+        </div>
+        <div style="border-top: 1px dashed #ccc; margin-bottom: 10px;"></div>
+        <div class="company-details">
+            <span><strong>Auto Entrepreneur :</strong> Abdessamad er-rochdi</span>
+            <span><strong>CNIE :</strong> JB491217</span>
+            <span style="display: block; width: 100%; margin: 5px 0;">
+                <strong>Adresse :</strong> Hay ait aguerade rue 3716 nr 13 dchiera inzgane
+            </span>
+            <span style="display: block; width: 100%; margin-bottom: 5px;">
+                <strong>ICE (N° d’inscription au registre national de l’auto-entrepreneur) :</strong> 002764028000037
+            </span>
+            <span><strong>IF :</strong> 50097159</span>
+            <span><strong>Taxe professionnelle N° :</strong> 49703142</span>
+            <div style="width: 100%; margin-top: 5px;">
+                <span style="margin-right: 20px;"><strong>TEL :</strong> 0762548393</span>
+                <span><strong>Mail :</strong> rochdi.abdessamad49@gmail.com</span>
+            </div>
+        </div>
     </div>
 </body>
+
 </html>

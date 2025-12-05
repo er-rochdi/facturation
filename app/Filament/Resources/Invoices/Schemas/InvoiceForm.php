@@ -38,6 +38,15 @@ class InvoiceForm
                             ->required(),
                         Textarea::make('notes')
                             ->columnSpanFull(),
+                        \Filament\Forms\Components\Repeater::make('items')
+                            ->relationship('items')
+                            ->schema([
+                                TextInput::make('designation')->required(),
+                                TextInput::make('days')->numeric()->default(1)->required()->label('Nbr de jours'),
+                                TextInput::make('unit_price')->numeric()->required()->label('Prix unitaire'),
+                            ])
+                            ->columns(3)
+                            ->columnSpanFull(),
                         TextInput::make('pdf_path'),
                 ])->columns(2)
                 ->collapsible()

@@ -10,7 +10,7 @@ class Client extends Model
     use SoftDeletes;
     protected $table = 'clients';
 
-    protected $fillable = ['name', 'email', 'phone', 'address'];
+    protected $fillable = ['name', 'email', 'phone', 'address', 'ice'];
 
     public function invoices()
     {

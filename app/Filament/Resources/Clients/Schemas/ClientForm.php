@@ -24,6 +24,7 @@ class ClientForm
                 TextInput::make('phone')
                     ->tel(),
                 TextInput::make('address'),
+                TextInput::make('ice'),
                 ])->columns(2)
                     ->collapsible()
             ])->columns(1);

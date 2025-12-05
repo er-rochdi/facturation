@@ -132,12 +132,11 @@ class InvoicesTable
                     ->visible(fn ($record) => !empty($record->pdf_path) && Storage::disk('public')->exists($record->pdf_path)),
 
                 Action::make('viewPdf')
-                    ->label('Voir PDF')
+                    ->label('Voir Facture')
                     ->icon('heroicon-o-eye')
                     ->color('info')
-                    ->url(fn ($record) => $record->pdf_path ? Storage::url($record->pdf_path) : null)
-                    ->openUrlInNewTab()
-                    ->visible(fn ($record) => !empty($record->pdf_path) && Storage::disk('public')->exists($record->pdf_path)),
+                    ->url(fn ($record) => route('invoices.pdf', $record))
+                    ->openUrlInNewTab(),
             ])
             ->bulkActions([
                 BulkActionGroup::make([
