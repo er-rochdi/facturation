@@ -31,7 +31,7 @@
 
         .invoice-title-wrapper {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .invoice-title {
@@ -74,7 +74,7 @@
         .totals-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             border: 1px solid #ccc;
         }
 
@@ -145,7 +145,7 @@
             <tr>
                 <th style="width: 40%;">Désignation</th>
                 <th>Nbr de jours</th>
-                <th>Prix unitaire</th>
+                <th>Prix par jour</th>
                 <th>Total</th>
             </tr>
         </thead>
