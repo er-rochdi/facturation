@@ -9,18 +9,18 @@
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 20px 40px;
+            padding: 10px 40px;
             color: #000;
             font-size: 14px;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
         }
 
         .logo {
-            max-height: 80px;
+            max-height: 100px;
             margin-bottom: 10px;
         }
 
@@ -122,12 +122,6 @@
         @if ($invoice->company && $invoice->company->logo)
             <img src="{{ storage_path('app/public/' . $invoice->company->logo) }}" alt="Logo" class="logo">
         @endif
-        <div>
-            @if ($invoice->company)
-                <strong>{{ $invoice->company->name }}</strong><br>
-                Auto-entrepreneur
-            @endif
-        </div>
     </div>
 
     <div class="date">
