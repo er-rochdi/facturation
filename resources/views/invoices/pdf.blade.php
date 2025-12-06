@@ -224,20 +224,42 @@
         </div>
         <div style="border-top: 1px dashed #ccc; margin-bottom: 10px;"></div>
         <div class="company-details">
-            <span><strong>Auto Entrepreneur :</strong> Abdessamad er-rochdi</span>
-            <span><strong>CNIE :</strong> JB491217</span>
-            <span style="display: block; width: 100%; margin: 5px 0;">
-                <strong>Adresse :</strong> Hay ait aguerade rue 3716 nr 13 dchiera inzgane
-            </span>
-            <span style="display: block; width: 100%; margin-bottom: 5px;">
-                <strong>ICE (N° d’inscription au registre national de l’auto-entrepreneur) :</strong> 002764028000037
-            </span>
-            <span><strong>IF :</strong> 50097159</span>
-            <span><strong>Taxe professionnelle N° :</strong> 49703142</span>
-            <div style="width: 100%; margin-top: 5px;">
-                <span style="margin-right: 20px;"><strong>TEL :</strong> 0762548393</span>
-                <span><strong>Mail :</strong> rochdi.abdessamad49@gmail.com</span>
-            </div>
+            @if ($invoice->company)
+                <span><strong>{{ $invoice->company->type === 'company' ? 'Entreprise' : 'Auto Entrepreneur' }}
+                        :</strong> {{ $invoice->company->name }}</span>
+                @if ($invoice->company->cnie)
+                    <span><strong>CNIE :</strong> {{ $invoice->company->cnie }}</span>
+                @endif
+                @if ($invoice->company->address)
+                    <span style="display: block; width: 100%; margin: 5px 0;">
+                        <strong>Adresse :</strong> {{ $invoice->company->address }}
+                    </span>
+                @endif
+                @if ($invoice->company->ice)
+                    <span style="display: block; width: 100%; margin-bottom: 5px;">
+                        <strong>ICE
+                            {{ $invoice->company->type === 'individual' ? '(N° d’inscription au registre national de l’auto-entrepreneur)' : '' }}
+                            :</strong> {{ $invoice->company->ice }}
+                    </span>
+                @endif
+                @if ($invoice->company->if)
+                    <span><strong>IF :</strong> {{ $invoice->company->if }}</span>
+                @endif
+                @if ($invoice->company->patente)
+                    <span><strong>Taxe professionnelle N° :</strong> {{ $invoice->company->patente }}</span>
+                @endif
+                @if ($invoice->company->rc)
+                    <span><strong>RC :</strong> {{ $invoice->company->rc }}</span>
+                @endif
+                <div style="width: 100%; margin-top: 5px;">
+                    @if ($invoice->company->phone)
+                        <span style="margin-right: 20px;"><strong>TEL :</strong> {{ $invoice->company->phone }}</span>
+                    @endif
+                    @if ($invoice->company->email)
+                        <span><strong>Mail :</strong> {{ $invoice->company->email }}</span>
+                    @endif
+                </div>
+            @endif
         </div>
     </div>
 </body>

@@ -76,8 +76,7 @@ class CompanyForm
 
                     TextInput::make('patente')
                         ->label('Patente')
-                        ->maxLength(50)
-                        ->visible(fn ($get) => $get('type') === 'company'),
+                        ->maxLength(50),
 
                     TextInput::make('cnie')
                         ->label('CNIE (pour particuliers)')
