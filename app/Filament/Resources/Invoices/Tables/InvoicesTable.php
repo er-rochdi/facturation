@@ -31,6 +31,9 @@ class InvoicesTable
                     ->label('Date')
                     ->date('d/m/Y')
                     ->sortable(),
+                TextColumn::make('month')
+                    ->label('Mois')
+                    ->sortable(),
                 TextColumn::make('amount')
                     ->label('Montant')
                     ->money('DHs')
@@ -51,9 +54,9 @@ class InvoicesTable
                     ]),
                 TextColumn::make('pdf_path')
                     ->label('PDF')
-                    ->formatStateUsing(fn ($state) => $state ? '✓ Généré' : '✗ Non généré')
+                    ->formatStateUsing(fn($state) => $state ? '✓ Généré' : '✗ Non généré')
                     ->badge()
-                    ->color(fn ($state) => $state ? 'success' : 'gray'),
+                    ->color(fn($state) => $state ? 'success' : 'gray'),
                 TextColumn::make('created_at')
                     ->label('Créé le')
                     ->dateTime('d/m/Y H:i')
@@ -112,7 +115,6 @@ class InvoicesTable
                                 ->title('PDF généré avec succès')
                                 ->success()
                                 ->send();
-
                         } catch (\Exception $e) {
                             Notification::make()
                                 ->title('Erreur lors de la génération du PDF')
@@ -121,21 +123,21 @@ class InvoicesTable
                                 ->send();
                         }
                     })
-                    ->visible(fn ($record) => $record->status !== 'cancelled'),
+                    ->visible(fn($record) => $record->status !== 'cancelled'),
 
                 Action::make('downloadPdf')
                     ->label('Télécharger PDF')
                     ->icon('heroicon-o-arrow-down-tray')
                     ->color('primary')
-                    ->url(fn ($record) => $record->pdf_path ? Storage::url($record->pdf_path) : null)
+                    ->url(fn($record) => $record->pdf_path ? Storage::url($record->pdf_path) : null)
                     ->openUrlInNewTab()
-                    ->visible(fn ($record) => !empty($record->pdf_path) && Storage::disk('public')->exists($record->pdf_path)),
+                    ->visible(fn($record) => !empty($record->pdf_path) && Storage::disk('public')->exists($record->pdf_path)),
 
                 Action::make('viewPdf')
                     ->label('Voir Facture')
                     ->icon('heroicon-o-eye')
                     ->color('info')
-                    ->url(fn ($record) => route('invoices.pdf', $record))
+                    ->url(fn($record) => route('invoices.pdf', $record))
                     ->openUrlInNewTab(),
             ])
             ->bulkActions([

@@ -17,8 +17,8 @@ class Invoice extends Model
         'status',
         'notes',
         'pdf_path',
-        'company_id'
-
+        'company_id',
+        'month',
     ];
 
     public function client()
