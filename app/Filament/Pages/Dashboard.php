@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use App\Filament\Widgets\DeponseStatsWidget;
 use App\Filament\Widgets\InvoiceChartWidget;
 use App\Filament\Widgets\MonthlyRevenueChartWidget;
 use App\Filament\Widgets\QuarterlyStatsWidget;
@@ -31,24 +32,24 @@ class Dashboard extends BaseDashboard
 
         return $form
             ->schema([
-                        Select::make('year')
-                            ->label('Année')
-                            ->options($years)
-                            ->default($currentYear)
-                            ->searchable()
-                            ->prefixIcon('heroicon-o-calendar'),
-                        Select::make('client_id')
-                            ->label('Client')
-                            ->options(fn() => Client::orderBy('name')->pluck('name', 'id')->toArray())
-                            ->placeholder('Tous les clients')
-                            ->searchable()
-                            ->prefixIcon('heroicon-o-user'),
-                        Select::make('company_id')
-                            ->label('Entreprise')
-                            ->options(fn() => Company::orderBy('name')->pluck('name', 'id')->toArray())
-                            ->placeholder('Toutes les entreprises')
-                            ->searchable()
-                            ->prefixIcon('heroicon-o-building-office'),
+                Select::make('year')
+                    ->label('Année')
+                    ->options($years)
+                    ->default($currentYear)
+                    ->searchable()
+                    ->prefixIcon('heroicon-o-calendar'),
+                Select::make('client_id')
+                    ->label('Client')
+                    ->options(fn() => Client::orderBy('name')->pluck('name', 'id')->toArray())
+                    ->placeholder('Tous les clients')
+                    ->searchable()
+                    ->prefixIcon('heroicon-o-user'),
+                Select::make('company_id')
+                    ->label('Entreprise')
+                    ->options(fn() => Company::orderBy('name')->pluck('name', 'id')->toArray())
+                    ->placeholder('Toutes les entreprises')
+                    ->searchable()
+                    ->prefixIcon('heroicon-o-building-office'),
             ]);
     }
 
@@ -56,6 +57,7 @@ class Dashboard extends BaseDashboard
     {
         return [
             StatsOverview::class,
+            DeponseStatsWidget::class,
             QuarterlyStatsWidget::class,
             MonthlyRevenueChartWidget::class,
             InvoiceChartWidget::class,
