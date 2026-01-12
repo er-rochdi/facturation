@@ -57,27 +57,38 @@ class QuarterlyStatsWidget extends StatsOverviewWidget
 
         $yearTotal = $q1Total + $q2Total + $q3Total + $q4Total;
 
+        // Données pour mini-graphiques
+        $q1Chart = [$q1Total * 0.3, $q1Total * 0.6, $q1Total];
+        $q2Chart = [$q2Total * 0.3, $q2Total * 0.6, $q2Total];
+        $q3Chart = [$q3Total * 0.3, $q3Total * 0.6, $q3Total];
+        $q4Chart = [$q4Total * 0.3, $q4Total * 0.6, $q4Total];
+
         return [
-            Stat::make('T1 (Jan-Mar)', number_format($q1Total, 2) . ' DH')
-                ->description('Trimestre 1')
-                ->descriptionIcon('heroicon-m-calendar')
-                ->color('info'),
-            Stat::make('T2 (Avr-Jun)', number_format($q2Total, 2) . ' DH')
-                ->description('Trimestre 2')
-                ->descriptionIcon('heroicon-m-calendar')
-                ->color('warning'),
-            Stat::make('T3 (Jul-Sep)', number_format($q3Total, 2) . ' DH')
-                ->description('Trimestre 3')
-                ->descriptionIcon('heroicon-m-calendar')
-                ->color('success'),
-            Stat::make('T4 (Oct-Déc)', number_format($q4Total, 2) . ' DH')
-                ->description('Trimestre 4')
-                ->descriptionIcon('heroicon-m-calendar')
-                ->color('danger'),
-            Stat::make('Total Année ' . $year, number_format($yearTotal, 2) . ' DH')
-                ->description('Total annuel')
-                ->descriptionIcon('heroicon-m-banknotes')
-                ->color('primary'),
+            Stat::make('🌸 T1 (Jan-Mar)', number_format($q1Total, 2, ',', ' ') . ' DH')
+                ->description('Premier trimestre')
+                ->descriptionIcon('heroicon-o-sparkles')
+                ->color('info')
+                ->chart($q1Chart),
+            Stat::make('☀️ T2 (Avr-Jun)', number_format($q2Total, 2, ',', ' ') . ' DH')
+                ->description('Deuxième trimestre')
+                ->descriptionIcon('heroicon-o-sun')
+                ->color('warning')
+                ->chart($q2Chart),
+            Stat::make('🍂 T3 (Jul-Sep)', number_format($q3Total, 2, ',', ' ') . ' DH')
+                ->description('Troisième trimestre')
+                ->descriptionIcon('heroicon-o-fire')
+                ->color('success')
+                ->chart($q3Chart),
+            Stat::make('❄️ T4 (Oct-Déc)', number_format($q4Total, 2, ',', ' ') . ' DH')
+                ->description('Quatrième trimestre')
+                ->descriptionIcon('heroicon-o-cloud')
+                ->color('danger')
+                ->chart($q4Chart),
+            Stat::make('💰 Total ' . $year, number_format($yearTotal, 2, ',', ' ') . ' DH')
+                ->description('Chiffre d\'affaires annuel')
+                ->descriptionIcon('heroicon-o-trophy')
+                ->color('primary')
+                ->chart([$q1Total, $q2Total, $q3Total, $q4Total]),
         ];
     }
 }
