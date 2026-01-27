@@ -23,6 +23,12 @@ class InvoicesTable
     {
         return $table
             ->columns([
+                TextColumn::make('invoice_number')
+                    ->label('N° Facture')
+                    ->searchable()
+                    ->sortable()
+                    ->badge()
+                    ->color('primary'),
                 TextColumn::make('client.name')
                     ->label('Client')
                     ->searchable()

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Facture #{{ $invoice->id }}</title>
+    <title>Facture {{ $invoice->invoice_number ?? '#' . str_pad($invoice->id, 6, '0', STR_PAD_LEFT) }}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -131,7 +131,7 @@
 
     <div class="invoice-title-wrapper">
         <div class="invoice-title">
-            Facture numéro {{ str_pad($invoice->id, 6, '0', STR_PAD_LEFT) }}
+            Facture N° {{ $invoice->invoice_number ?? str_pad($invoice->id, 6, '0', STR_PAD_LEFT) }}
         </div>
     </div>
 

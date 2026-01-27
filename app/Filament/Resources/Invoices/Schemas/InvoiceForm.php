@@ -16,6 +16,10 @@ class InvoiceForm
         return $schema->schema([
             Section::make('Invoice Details')
                 ->schema([
+                    TextInput::make('invoice_number')
+                        ->label('Numéro de facture')
+                        ->placeholder('Ex: FAC-2026-001')
+                        ->maxLength(50),
                     Select::make('client_id')
                         ->relationship('client', 'name')
                         ->required(),
