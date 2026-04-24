@@ -13,23 +13,27 @@ class TopClientsWidget extends BaseWidget
 {
     use InteractsWithPageFilters;
 
+    protected static bool $isLazy = false;
+
     protected static ?int $sort = 5;
 
     protected int | string | array $columnSpan = 1;
 
-    public function getHeading(): string
+    protected function getTableHeading(): string
     {
         return 'Top 5 Meilleurs Clients';
     }
 
     public function table(Table $table): Table
     {
-        $year = $this->filters['year'] ?? now()->year;
-        $companyId = $this->filters['company_id'] ?? null;
+        $year = $this->pageFilters['year'] ?? now()->year;
+        $clientId = $this->pageFilters['client_id'] ?? null;
+        $companyId = $this->pageFilters['company_id'] ?? null;
 
         return $table
             ->query(
                 Client::query()
+                    ->when($clientId, fn (Builder $query) => $query->whereKey($clientId))
                     ->withSum([
                         'invoices as total_amount' => function (Builder $query) use ($year, $companyId) {
                             $query->whereYear('invoice_date', $year);

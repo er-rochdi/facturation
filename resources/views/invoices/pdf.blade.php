@@ -200,13 +200,13 @@
         <tr>
             <td style="width: 50%;">Montant en dirhams exonéré de la TVA¹</td>
             <td style="width: 30%;">Total Net à payer</td>
-            <td style="text-align: right;">{{ number_format($calculatedTotal, 0, ',', ' ') }}</td>
+            <td style="text-align: right;">{{ number_format($invoice->amount, 0, ',', ' ') }}</td>
         </tr>
     </table>
 
     <div class="amount-in-words">
         ARRETE LA PRESENTE FACTURE A LA SOMME DE :<br>
-        <strong>#{{ class_exists('NumberFormatter') ? new NumberFormatter('fr', NumberFormatter::SPELLOUT)->format($calculatedTotal) : $calculatedTotal }}
+        <strong>#{{ class_exists('NumberFormatter') ? new NumberFormatter('fr', NumberFormatter::SPELLOUT)->format($invoice->amount) : '' }}
             Dirhams#</strong>
     </div>
 
